@@ -1,0 +1,6 @@
+.version
+.vs
+*.user
+**/bin
+**/obj
+src/Properties/launchSettings.json

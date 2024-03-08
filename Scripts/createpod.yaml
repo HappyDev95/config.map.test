@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: configmap-test-pod
+    labels:
+        app.kubernetes.io/name: configmap-test-pod  #this is needed so a k8 service can target this label
+spec:
+    containers:
+        - name: configmaptest
+          image: config_map_test:latest # note this has to be the name of the container image defined in Docker_Build.sh
+          imagePullPolicy: Never #needed since we are using a local image (i.e. Docker Desktop Image) and not trying to pull from a remote (ie. Artifiactor or JFrog)
+          volumeMounts:
+            - name: configmapmounted
+              mountPath: "/mnt/configmap"
+              readOnly: true
+    volumes:
+        - name: configmapmounted
+          configMap:
+            name: test-configmap #note this has to be the name of the configmap defined in configmap.yaml (or the name of the configmap that exists in the namespace)

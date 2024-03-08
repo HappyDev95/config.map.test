@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: configmap-test-service
+    namespace: test-namespace #this needs to be the namespace in which the pod is deployed
+spec:
+    selector:
+        app.kubernetes.io/name: configmap-test-pod #this needs to be the name of the label on the pod
+    ports:
+        - name: http
+          protocol: TCP
+          port: 9654        #The port of this service (this will be what is exposed externally)
+          targetPort: 9654  #This is the actual port on which your application is running inside the container
+    type: LoadBalancer      #Exposes the Service externally using an external load balancer. Needed to access the service via localhost:9654/swagger/index.html
